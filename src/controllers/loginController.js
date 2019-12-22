@@ -3,6 +3,8 @@ const Login = require('../models/LoginModel')
 import bodyParser from 'body-parser'
 
 exports.index = (req, res) => {
+  if(req.session.user) return res.render('login-logado')
+  console.log(req.session.user)
   res.render('login');
 
 };
@@ -47,15 +49,25 @@ exports.login = async (req, res) => {
         return res.redirect('back');
       });
       return;
-    }   
-    req.flash('success', 'Seu usuário entrou com sucesso.');
+    }  
+
+
+    req.flash('success', 'Logado entrou com sucesso.');
+    req.session.user = login.user;
     req.session.save( function() {
       return res.redirect('back');
     }); 
   
+
+
   } catch (error) {
     console.log(error)
     return res.render('404')
-  }
+    }
   
   };
+
+exports.logout = function(req, res) {
+  req.session.destroy();
+  res.redirect('/')
+}
