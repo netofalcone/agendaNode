@@ -1,7 +1,7 @@
 const path = require('path'); // CommonJS
 
 module.exports = {
-  mode: 'production',
+  mode: 'dev',
   entry: './frontend/main.js',
   output: {
     path: path.resolve(__dirname, 'public', 'assets', 'js'),
